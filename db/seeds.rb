@@ -5,4 +5,5 @@ admin.first_name = 'Admin'
 admin.last_name = 'User'
 admin.middle_name = 'Exaple'
 admin.role = 'admin'
+admin.region = 'all_regions'
 admin.save!

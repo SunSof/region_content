@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # before_action :auth_user, only: %i[edit update show destory]
+  before_action :auth_user, only: %i[show destroy]
 
   def new
     @user = User.new
@@ -29,5 +29,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:first_name, :middle_name, :last_name, :region, :email, :password, :password_confirmation)
+  end
+
+  def auth_user
+    redirect_to root_path unless params[:id].to_s == current_user.id.to_s
   end
 end
