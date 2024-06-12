@@ -1,8 +1,8 @@
 class User < ApplicationRecord
+  has_many :posts
   authenticates_with_sorcery!
 
   before_validation :email_downcase
-  # before_create :set_admin_region, if: :admin?
   before_save :set_admin_region, if: :admin?
 
   validates :role, inclusion: { in: ['user', 'admin'] }
@@ -13,15 +13,14 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
+  def admin?
+    role == 'admin'
+  end
 
   private
 
   def email_downcase
     self.email = email.downcase if email.present?
-  end
-
-  def admin?
-    role == 'admin'
   end
 
   def set_admin_region

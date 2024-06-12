@@ -18,5 +18,12 @@ Rails.application.routes.draw do
   post 'logout' => 'user_sessions#destroy', as: 'logout'
 
 
+  get "posts/new" => "posts#new", as: "new_post"
+  post "posts/new" => "posts#create"
+
+  get "posts/:id" => "posts#show", as: "post"
+  get '/all_region' => 'posts#all_region', as: 'all_region_posts'
+  get '/drafts' => 'posts#drafts', as: 'drafts'
+  get "/all_user_posts" => "posts#all_user_posts", as: "all_user_posts"
 
 end
