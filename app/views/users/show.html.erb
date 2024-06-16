@@ -4,7 +4,9 @@
     <div class="text-amber-500 mb-2">
       <p>ФИО: <%= @user.last_name %> <%= @user.first_name %> <%= @user.middle_name %></p>
       <p>Email: <%= @user.email %></p>
-      <p>Регион: <%= @user.region %></p>
+      <% if @user.role == 'user' %>
+        <p>Регион: <%= @user.region.name %></p>
+      <% end %>
       <p>Статус: <%= @user.role %></p>
     </div>
     <div class="flex items-center justify-between">

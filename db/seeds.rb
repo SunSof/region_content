@@ -1,9 +1,5 @@
-admin = User.find_or_initialize_by(email: 'admin@example.com')
-admin.password = 'password'
-admin.password_confirmation = 'password'
-admin.first_name = 'Admin'
-admin.last_name = 'User'
-admin.middle_name = 'Exaple'
-admin.role = 'admin'
-admin.region = 'all_regions'
-admin.save!
+# Load all seed files from the seeds directory
+Dir[Rails.root.join('db/seeds/*.rb')].sort.each do |seed|
+  puts "Loading seed file: #{seed}"
+  load seed
+end

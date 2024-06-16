@@ -13,6 +13,7 @@
               <!-- Пустой блок для выравнивания, если нет изображения -->
             <% end %>
             <h3 class="text-lg font-semibold text-center"><%= post.title %></h3>
+            <p class="text-sm text-gray-700 text-center"><%= post.published_at %></p>
             <p class="text-sm text-gray-700 text-center"><%= post.content.truncate(100) %></p>
             <%= link_to "Подробнее", post_path(post), class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
           </div>

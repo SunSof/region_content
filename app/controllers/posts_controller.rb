@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
 
-  before_action :set_post, only: [:show, :approve, :reject]
+  before_action :set_post, only: [:show, :submit_for_review, :approve, :reject]
 
-  def all_region
+  def index_by_region
     user = User.find(current_user.id)
-    @posts = Post.where(region: user.region)
+    @posts = Post.where( status: 'approved')
   end
 
-  def all_user_posts
+  def user_posts
     @user = User.find(current_user.id)
     @posts = @user.posts.where(status: ['approved', 'pending_review','rejected'])
   end
@@ -27,8 +27,9 @@ class PostsController < ApplicationController
         UpdatePostStatusJob.perform_async(@post.id, 'draft')
         redirect_to drafts_path
       elsif params[:commit] == 'На модерацию'
-        UpdatePostStatusJob.perform_async(@post.id, 'pending_review')
-        redirect_to all_user_posts_path
+        submit_for_review
+      elsif params[:commit] == 'Опубликовать'
+        approve
       else
         render :new
       end
@@ -37,12 +38,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def submit_for_review
+    UpdatePostStatusJob.perform_async(@post.id, 'pending_review')
+    redirect_to user_posts_path
+  end
+
   def approve
     UpdatePostStatusJob.perform_async(@post.id, 'approved')
+    @post.update(published_at: Time.zone.now)
+    flash[:notice] = "Пост одобрен"
+    redirect_to pending_posts_for_review_path
   end
 
   def reject
     UpdatePostStatusJob.perform_async(@post.id, 'rejected')
+    flash[:alert] = "Пост отклонен"
+    pending_posts_for_review_path
   end
 
   def drafts
@@ -64,6 +75,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :user_id, :region, images: [], files:[] )
+    params.require(:post).permit(:title, :content, :user_id, :region_id, images: [], files:[] )
   end
 end

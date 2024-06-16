@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
   get "users/:id" => "users#show", as: "user"
 
+  get "/users" => "users#users", as: "users"
+  patch "users/:id" => "users#set_admin", as: "set_admin"
+
   get "login" => "user_sessions#new", as: "login"
   post "login" => "user_sessions#create"
   post "logout" => "user_sessions#destroy", as: "logout"
@@ -31,10 +34,10 @@ Rails.application.routes.draw do
   patch "posts/:id/approve" => "posts#approve", as: "approve"
   patch "posts/:id/reject" => "posts#reject", as: "reject"
 
-  get "/all_region" => "posts#all_region", as: "all_region_posts"
+  get "/index_by_region" => "posts#index_by_region", as: "index_by_region"
   get "/drafts" => "posts#drafts", as: "drafts"
-  get "/all_user_posts" => "posts#all_user_posts", as: "all_user_posts"
+  get "/user_posts" => "posts#user_posts", as: "user_posts"
 
-  get "/all_review_posts" => "posts#all_review_posts", as: "all_review_posts"
+  get "/pending_posts_for_review" => "posts#pending_posts_for_review", as: "pending_posts_for_review"
 
 end
