@@ -6,16 +6,8 @@ class PostsController < ApplicationController
 
   def index
     @posts = @posts.where( status: 'approved').order(published_at: :desc)
+    store_filters_in_session
   end
-
-  # def index
-  #   @posts = Post.where( status: 'approved').order(published_at: :desc)
-  #   @posts = @posts.by_region(params[:region_id]) if params[:region_id].present?
-  #   @posts = @posts.by_user(params[:user_id]) if params[:user_id].present?
-  #   if params[:start_date].present? && params[:end_date].present?
-  #     @posts = @posts.by_publish_date(params[:start_date], params[:end_date])
-  #   end
-  # end
 
   def user_posts
     @user = User.find(current_user.id)
@@ -82,6 +74,18 @@ class PostsController < ApplicationController
     @posts = Post.where(status: 'pending_review')
   end
 
+  def generate_report
+    load_posts_from_session
+    respond_to do |format|
+      format.xlsx do
+        response.headers['Content-Disposition'] = 'attachment; filename="posts_report.xlsx"'
+        render xlsx: "generate_report", filename: "posts_report.xlsx", locals: { posts: @posts }
+      end
+    end
+    file_path = Rails.root.join("tmp", "posts_report.xlsx")
+    send_file file_path, filename: "posts_report.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  end
+
   private
 
   def load_posts
@@ -102,6 +106,41 @@ class PostsController < ApplicationController
       @posts = @posts.by_publish_date(start_date, end_date)
     end
   end
+
+  def store_filters_in_session
+    session[:filters] = {
+      region_id: params[:region_id],
+      user_id: params[:user_id],
+      start_date: params[:start_date],
+      end_date: params[:end_date]
+    }
+  end
+
+  def load_posts_from_session
+    filters = session[:filters]
+    @posts = Post.all.where( status: 'approved')
+    if filters["region_id"].present?
+      @posts = @posts.by_region(filters["region_id"].to_i)
+    end
+
+    if filters["user_id"].present?
+      @posts = @posts.by_user(filters["user_id"].to_i)
+    end
+
+    apply_date_filters_from_session(filters["start_date"], filters["end_date"])
+
+  end
+
+  def apply_date_filters_from_session(start_date, end_date)
+    if start_date.present? && end_date.present?
+      start_date = start_date.to_date.beginning_of_day
+      end_date = end_date.to_date.end_of_day
+      @posts = @posts.by_publish_date(start_date, end_date)
+    end
+
+    @posts
+  end
+
 
   def set_post
     @post = Post.find(params[:id])

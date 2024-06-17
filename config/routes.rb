@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   get "/index" => "posts#index", as: "index"
   get "/drafts" => "posts#drafts", as: "drafts"
+  get "/generate_report" => "posts#generate_report", as: "generate_report"
   delete "posts/:id" => "posts#destroy"
 
   get "/user_posts" => "posts#user_posts", as: "user_posts"
