@@ -7,12 +7,12 @@
       <% if current_user %>
         <%= link_to 'Мой аккаунт', user_path(current_user.id), class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
         <%= link_to 'Создать пост', new_post_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+        <%= link_to 'Все посты', index_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
         <%= link_to 'Мои посты', user_posts_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
         <% if current_user.admin? %>
           <%= link_to 'Добавить админа', users_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
           <%= link_to 'Посты на модерацию', pending_posts_for_review_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
         <% else %>
-          <%= link_to 'Все посты', index_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
           <%= link_to 'Черновики', drafts_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
         <% end %>
       <% else %>

@@ -3,7 +3,7 @@
     <% if current_user %>
       <h1 class="text-4xl font-bold mb-4 text-green-700">Спасибо за регистрацию!</h1>
       <p class="mb-8 text-lg text-green-700">Теперь Вы можете писать посты, загружать фото и файлы</p>
-      <%= link_to 'К постам моего региона', '#', class: 'px-6 py-3 font-bold text-white bg-orange-500 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-green-500' %>
+      <%= link_to 'К постам', index_path, class: 'px-6 py-3 font-bold text-white bg-orange-500 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-green-500' %>
     <% else %>
       <h1 class="text-4xl font-bold mb-4 text-green-700">Добро пожаловать на наш сайт!</h1>
       <p class="mb-8 text-lg text-green-700">Делитесь новостями своего региона</p>

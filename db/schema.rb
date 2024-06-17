@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_163557) do
     t.bigint "region_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["region_id"], name: "index_posts_on_region_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -73,6 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_163557) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["last_name"], name: "index_users_on_last_name"
     t.index ["region_id"], name: "index_users_on_region_id"
   end
 

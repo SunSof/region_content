@@ -4,9 +4,9 @@ class CreatePosts < ActiveRecord::Migration[7.1]
       t.string :title
       t.text :content
       t.string :status
-      t.datetime :published_at
-      t.references :user, null: false, foreign_key: true
-      t.references :region, null: false, foreign_key: true
+      t.datetime :published_at, index: true
+      t.references :user, null: false, foreign_key: true, index: true
+      t.references :region, null: false, foreign_key: true, index: true
 
       t.timestamps
     end

@@ -3,15 +3,9 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :submit_for_review, :approve, :reject, :destroy]
   before_action :load_posts, only: [:index]
 
-
   def index
     @posts = @posts.where( status: 'approved').order(published_at: :desc)
     store_filters_in_session
-  end
-
-  def user_posts
-    @user = User.find(current_user.id)
-    @posts = @user.posts.where(status: ['approved', 'pending_review','rejected'])
   end
 
   def show
@@ -40,9 +34,26 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    if @post.status == 'draft'
+      @post.destroy
+    end
+    redirect_to drafts_path
+  end
+
+  def user_posts
+    @user = User.find(current_user.id)
+    @posts = @user.posts.where(status: ['approved', 'pending_review','rejected'])
+  end
+
   def submit_for_review
     UpdatePostStatusJob.perform_async(@post.id, 'pending_review')
     redirect_to user_posts_path
+  end
+
+  def drafts
+    @user = User.find(current_user.id)
+    @posts = @user.posts.where(status: 'draft')
   end
 
   def approve
@@ -54,20 +65,8 @@ class PostsController < ApplicationController
 
   def reject
     UpdatePostStatusJob.perform_async(@post.id, 'rejected')
-    flash[:alert] = "Пост отклонен"
+    flash[:notice] = "Пост отклонен"
     pending_posts_for_review_path
-  end
-
-  def drafts
-    @user = User.find(current_user.id)
-    @posts = @user.posts.where(status: 'draft')
-  end
-
-  def destroy
-    if @post.status == 'draft'
-      @post.destroy
-    end
-    redirect_to drafts_path
   end
 
   def pending_posts_for_review
@@ -87,6 +86,14 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :content, :user_id, :region_id, images: [], files:[] )
+  end
 
   def load_posts
     @posts = Post.all
@@ -139,14 +146,5 @@ class PostsController < ApplicationController
     end
 
     @posts
-  end
-
-
-  def set_post
-    @post = Post.find(params[:id])
-  end
-
-  def post_params
-    params.require(:post).permit(:title, :content, :user_id, :region_id, images: [], files:[] )
   end
 end

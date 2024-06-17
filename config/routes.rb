@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post "users/new" => "users#create"
 
   get "users/:id" => "users#show", as: "user"
+  delete "users/:id" => "users#destroy"
 
   get "/users" => "users#users", as: "users"
   patch "users/:id" => "users#set_admin", as: "set_admin"
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   get "/index" => "posts#index", as: "index"
   get "/drafts" => "posts#drafts", as: "drafts"
   get "/generate_report" => "posts#generate_report", as: "generate_report"
+
   delete "posts/:id" => "posts#destroy"
 
   get "/user_posts" => "posts#user_posts", as: "user_posts"

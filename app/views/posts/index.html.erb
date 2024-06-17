@@ -9,8 +9,8 @@
           <p class="text-gray-700 text-center"><%= post.content %></p>
           <%= render 'posts/images', post: post%>
           <%= render 'posts/files', post: post%>
-          <p class="text-gray-700 text-end">Автор: <%= post.user.first_name %></p>
-          <p class="text-gray-700 text-start">Дата и время публикации: <%= post.published_at %></p>
+          <p class="text-gray-700 text-end">Автор: <%= post.user.first_name %> <%= post.user.last_name %></p>
+          <p class="text-gray-700 text-start">Дата и время публикации: <%= post.data_time_formatter %></p>
           <p class="text-gray-700 text-start">Регион: <%= post.region.name %></p>
         </div>
       <% end %>
