@@ -1,0 +1,10 @@
+<% if post.files.attached? %>
+  <div class="mb-4">
+    <h4>Файлы:</h4>
+    <% post.files.each do |file| %>
+      <div>
+        <%= link_to file.filename, rails_blob_path(file), class: 'text-green-700 hover:text-green-900 underline mb-2' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

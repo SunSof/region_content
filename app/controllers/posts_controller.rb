@@ -1,11 +1,21 @@
 class PostsController < ApplicationController
 
-  before_action :set_post, only: [:show, :submit_for_review, :approve, :reject]
+  before_action :set_post, only: [:show, :submit_for_review, :approve, :reject, :destroy]
+  before_action :load_posts, only: [:index]
 
-  def index_by_region
-    user = User.find(current_user.id)
-    @posts = Post.where( status: 'approved')
+
+  def index
+    @posts = @posts.where( status: 'approved').order(published_at: :desc)
   end
+
+  # def index
+  #   @posts = Post.where( status: 'approved').order(published_at: :desc)
+  #   @posts = @posts.by_region(params[:region_id]) if params[:region_id].present?
+  #   @posts = @posts.by_user(params[:user_id]) if params[:user_id].present?
+  #   if params[:start_date].present? && params[:end_date].present?
+  #     @posts = @posts.by_publish_date(params[:start_date], params[:end_date])
+  #   end
+  # end
 
   def user_posts
     @user = User.find(current_user.id)
@@ -61,14 +71,37 @@ class PostsController < ApplicationController
     @posts = @user.posts.where(status: 'draft')
   end
 
-  def edit
+  def destroy
+    if @post.status == 'draft'
+      @post.destroy
+    end
+    redirect_to drafts_path
   end
 
-  def all_review_posts
+  def pending_posts_for_review
     @posts = Post.where(status: 'pending_review')
   end
 
   private
+
+  def load_posts
+    @posts = Post.all
+    apply_filters
+  end
+
+  def apply_filters
+    @posts = @posts.by_region(params[:region_id]) if params[:region_id].present?
+    @posts = @posts.by_user(params[:user_id]) if params[:user_id].present?
+    apply_date_filters
+  end
+
+  def apply_date_filters
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = params[:start_date].to_date
+      end_date = params[:end_date].to_date
+      @posts = @posts.by_publish_date(start_date, end_date)
+    end
+  end
 
   def set_post
     @post = Post.find(params[:id])

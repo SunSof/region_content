@@ -34,8 +34,10 @@ Rails.application.routes.draw do
   patch "posts/:id/approve" => "posts#approve", as: "approve"
   patch "posts/:id/reject" => "posts#reject", as: "reject"
 
-  get "/index_by_region" => "posts#index_by_region", as: "index_by_region"
+  get "/index" => "posts#index", as: "index"
   get "/drafts" => "posts#drafts", as: "drafts"
+  delete "posts/:id" => "posts#destroy"
+
   get "/user_posts" => "posts#user_posts", as: "user_posts"
 
   get "/pending_posts_for_review" => "posts#pending_posts_for_review", as: "pending_posts_for_review"
