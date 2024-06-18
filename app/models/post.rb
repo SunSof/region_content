@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include Filterable
+
   belongs_to :user
   belongs_to :region
 
@@ -8,7 +10,7 @@ class Post < ApplicationRecord
   scope :by_region, ->(region_id) { where(region_id: region_id) if region_id.present? }
   scope :by_user, ->(user_id) { where(user_id: user_id) if user_id.present? }
   scope :by_publish_date, ->(start_date, end_date) {
-    where(published_at: start_date.beginning_of_day..end_date.end_of_day) if start_date.present? && end_date.present?
+    where(published_at: start_date.to_date.beginning_of_day..end_date.to_date.end_of_day) if start_date.present? && end_date.present?
   }
 
   validates :title, :content, :region,  presence: true

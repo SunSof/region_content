@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   post "login" => "user_sessions#create"
   post "logout" => "user_sessions#destroy", as: "logout"
 
-
   get "posts/new" => "posts#new", as: "new_post"
   post "posts/new" => "posts#create"
 

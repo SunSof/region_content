@@ -3,8 +3,8 @@ FactoryBot.define do
     first_name {'Alex'}
     middle_name {'Alexandrovich'}
     last_name { 'Alexandrov' }
-    region {'Moscow'}
-    sequence(:email) { "user@example.com" }
+    association :region
+    sequence(:email) { |n| "user#{n}@example.com" }
     password { 'password' }
     password_confirmation { 'password' }
     role { 'user' }
