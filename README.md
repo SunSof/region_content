@@ -1,24 +1,29 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Региональный контент
 
-Things you may want to cover:
+Проект представляет собой сервис для написания и управления постами пользователей с привязкой к регионам России. В приложении реализованы следующие функции:
+Посты и их состояния
+Роли пользователей: обычные пользователи и администраторы
+Регистрация и аутентификация
+Фильтрация и поиск постов
+Возможность формировать отчет в виде xlsx 
 
-* Ruby version
+## Requirements
 
-* System dependencies
+- Ruby version 3.1.2
+- Rails version 7.1.3
+- PostgreSQL 
 
-* Configuration
+## Installation
 
-* Database creation
+1. Clone the repository: [`git clone ttps://github.com/SunSof/region_content.git`]
+2. Install dependencies: `bundle install`
+3. Setup database: `rails db:create` `rails db:migrate` `rails db:seed`
 
-* Database initialization
+## Running
 
-* How to run the test suite
+Start the Rails server: `bin/dev`
 
-* Services (job queues, cache servers, search engines, etc.)
+## Testing
 
-* Deployment instructions
-
-* ...
+Run tests with RSpec: `rspec spec`
