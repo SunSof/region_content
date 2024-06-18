@@ -1,0 +1,19 @@
+<div class="flex items-center justify-center min-h-screen bg-green-100">
+  <%= render 'posts/filters'%>
+  <div class="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center text-green-700">Все посты</h2>
+    <div class="grid grid-cols-1 gap-8">
+      <% @posts.each do |post| %>
+        <div class="bg-green-200 rounded-lg p-8 space-y-4">
+          <h3 class="text-xl font-semibold text-center"><%= post.title %></h3>
+          <p class="text-gray-700 text-center"><%= post.content %></p>
+          <%= render 'posts/images', post: post%>
+          <%= render 'posts/files', post: post%>
+          <p class="text-gray-700 text-end">Автор: <%= post.user.first_name %> <%= post.user.last_name %></p>
+          <p class="text-gray-700 text-start">Дата и время публикации: <%= post.data_time_formatter %></p>
+          <p class="text-gray-700 text-start">Регион: <%= post.region.name %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

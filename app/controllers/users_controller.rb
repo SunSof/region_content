@@ -25,10 +25,20 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def users
+    @users = User.where(role:'user')
+  end
+
+  def set_admin
+    user = User.find(params[:id])
+    user.role = 'admin'
+    user.save
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :middle_name, :last_name, :region, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :middle_name, :last_name, :region_id, :email, :password, :password_confirmation)
   end
 
   def auth_user

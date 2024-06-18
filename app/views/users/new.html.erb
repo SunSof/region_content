@@ -13,31 +13,31 @@
     <% end %>
     <%= form_for @user, url: new_user_path do |f| %>
       <div class="mb-4">
-        <%= f.label :last_name, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label 'Фамилия', class: 'block text-sm font-medium text-green-700' %>
         <%= f.text_field :last_name, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :first_name, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label 'Имя', class: 'block text-sm font-medium text-green-700' %>
         <%= f.text_field :first_name, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :middle_name, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label 'Отчество', class: 'block text-sm font-medium text-green-700' %>
         <%= f.text_field :middle_name, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :email, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label 'Почта', class: 'block text-sm font-medium text-green-700' %>
         <%= f.email_field :email, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :region, class: 'block text-sm font-medium text-green-700' %>
-        <%= f.text_field :region, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
+        <%= f.label "Регион", class: 'block text-sm font-medium text-green-700'  %>
+        <%= f.collection_select :region_id, Region.all, :id, :name, { prompt: "Выберите регион" }, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :password, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label "Пароль", class: 'block text-sm font-medium text-green-700' %>
         <%= f.password_field :password, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="mb-4">
-        <%= f.label :password_confirmation, class: 'block text-sm font-medium text-green-700' %>
+        <%= f.label "Подтверждение пароля", class: 'block text-sm font-medium text-green-700' %>
         <%= f.password_field :password_confirmation, class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
       </div>
       <div class="flex items-center justify-between">

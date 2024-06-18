@@ -1,0 +1,27 @@
+p = Axlsx::Package.new
+    p.workbook.add_worksheet(name: "Отчет по постам") do |sheet|
+      sheet.add_row ["Регион", "Заголовок", "Содержание", "Автор","Дата и время публикации", "URL картинок", "URL файлов"]
+
+      @posts.each do |post|
+        region_name = post.region.name 
+        title = post.title
+        content = post.content
+        author = post.user.first_name 
+        published_at = post.published_at.strftime("%Y-%m-%d %H:%M:%S")
+        images_urls = post.images.map { |image| url_for(image) }
+        files_urls = post.files.map { |file| url_for(file) }
+
+        sheet.add_row [
+          region_name,
+          title,
+          content,
+          author,
+          published_at,
+          images_urls.join(", "),
+          files_urls.join(", ")
+        ]
+      end
+    end
+
+    file_path = Rails.root.join("tmp", "posts_report.xlsx")
+    p.serialize(file_path)

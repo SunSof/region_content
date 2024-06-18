@@ -1,0 +1,26 @@
+<div class="flex items-center justify-center min-h-screen bg-green-100">
+  <div class="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <% if @posts.present?%>
+      <h2 class="text-2xl font-bold text-center text-green-700">Все ваши посты</h2>
+      <div class="grid grid-cols-2 gap-8">
+        <% @posts.each do |post| %>
+          <div class="bg-green-200 rounded-lg p-4 flex flex-col justify-center items-center space-y-2">
+            <p class="text-sm text-green-700">Статус: <%= post.status %></p>
+            <% if post.images.attached? %>
+              <%= image_tag url_for(post.images.first), class: 'rounded-lg max-h-32 mb-2' %>
+            <% else %>
+              <div class="h-32"></div>
+              <!-- Пустой блок для выравнивания, если нет изображения -->
+            <% end %>
+            <h3 class="text-lg font-semibold text-center"><%= post.title %></h3>
+            <p class="text-sm text-gray-700 text-center"><%= post.published_at %></p>
+            <p class="text-sm text-gray-700 text-center"><%= post.content.truncate(100) %></p>
+            <%= link_to "Подробнее", post_path(post), class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <h2 class="text-2xl font-bold text-center text-green-700">Вы не написали ни одного поста</h2>
+    <% end %>
+  </div>
+</div>

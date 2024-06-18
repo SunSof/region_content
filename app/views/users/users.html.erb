@@ -1,0 +1,19 @@
+<div class="flex items-center justify-center min-h-screen bg-green-100">
+  <div class="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <% if @users.present?%>
+      <h2 class="text-2xl font-bold text-center text-green-700">Все пользователи</h2>
+      <div class="grid grid-cols-2 gap-8">
+        <% @users.each do |user| %>
+          <div class="bg-green-200 rounded-lg p-4 flex flex-col justify-center items-center space-y-2">
+            <p class="text-sm text-green-700">Role: <%= user.role %></p>
+            <h3 class="text-lg font-semibold text-center"><%= user.email %></h3>
+            <p class="text-sm text-gray-700 text-center"><%= user.last_name %> <%= user.first_name %> <%= user.middle_name %></p>
+            <%= button_to "Сделать админом", set_admin_path(user), method: :patch, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <h2 class="text-2xl font-bold text-center text-green-700">Пользователей не существует</h2>
+    <% end %>
+  </div>
+</div>

@@ -29,6 +29,17 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 gem "redis", ">= 4.0.1"
 
+# Background job processor for Ruby on Rails that uses Redis for asynchronous task execution.
+gem 'sidekiq'
+gem 'sidekiq-cron'
+
+# Library for image processing, providing a straightforward interface for manipulating images.
+gem 'image_processing'
+
+# Generating Excel files (xlsx format)
+gem 'caxlsx'
+gem 'caxlsx_rails'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

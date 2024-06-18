@@ -4,12 +4,14 @@
     <div class="text-amber-500 mb-2">
       <p>ФИО: <%= @user.last_name %> <%= @user.first_name %> <%= @user.middle_name %></p>
       <p>Email: <%= @user.email %></p>
-      <p>Регион: <%= @user.region %></p>
+      <% if @user.role == 'user' %>
+        <p>Регион: <%= @user.region.name %></p>
+      <% end %>
       <p>Статус: <%= @user.role %></p>
     </div>
     <div class="flex items-center justify-between">
       <%= button_to "Выйти из аккаунта", :logout, method: :post, class:'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
-      <%= button_to "Удалить аккаунт", @user, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class:'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+      <%= button_to "Удалить аккаунт", @user, method: :delete, form: {data: {turbo_confirm: 'Вы уверены, что хотите удалить аккаунт?'}}, class:'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
     </div>
   </div>
 </div>

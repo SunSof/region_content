@@ -1,0 +1,7 @@
+<% if post.images.attached? %>
+  <% post.images.each do |image| %>
+    <div>
+      <%= image_tag url_for(image), class: 'rounded-lg mb-2' %>
+    </div>
+  <% end %>
+<% end %>

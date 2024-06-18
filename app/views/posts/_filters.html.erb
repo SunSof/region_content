@@ -1,0 +1,32 @@
+<div class="w-64 p-4 bg-white rounded-lg shadow-md sticky top-4 self-start mr-4">
+  <h2 class="text-xl font-bold text-center text-green-700">Фильтрация постов</h2>
+  <%= form_with url: index_path, method: :get, local: true, class: "space-y-4" do %>
+    <div class="mb-4">
+      <%= label_tag :region_id, 'Регион', class: 'block text-sm font-medium text-green-700' %>
+      <%= select_tag :region_id, options_from_collection_for_select(Region.all, :id, :name, params[:region_id]), 
+                       include_blank: 'Выберите регион', 
+                       class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
+    </div>
+    <div class="mb-4">
+      <%= label_tag :user_id, 'Пользователь', class: 'block text-sm font-medium text-green-700' %>
+      <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :last_name, params[:user_id]), 
+                       include_blank: 'Выберите автора', 
+                       class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
+    </div>
+    <div class="mb-4">
+      <%= label_tag :start_date, 'Дата начала', class: 'block text-sm font-medium text-green-700' %>
+      <%= date_field_tag :start_date, params[:start_date], 
+                           class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
+    </div>
+    <div class="mb-4">
+      <%= label_tag :end_date, 'Дата окончания', class: 'block text-sm font-medium text-green-700' %>
+      <%= date_field_tag :end_date, params[:end_date], 
+                           class: 'w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600' %>
+    </div>
+    <div class="flex items-center justify-around">
+      <%= submit_tag 'Фильтровать', class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+      <%= link_to 'Сбросить', index_path, class: 'px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600' %>
+    </div>
+    <%= link_to 'Скачать отчет в формате Excel', generate_report_path(format: :xlsx), class: 'text-sm text-orange-600' %>
+  <% end %>
+</div>
